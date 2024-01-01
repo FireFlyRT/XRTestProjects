@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.Events;
 
 public class XRDoorInteractable : SimpleHinchInteractable
 {
@@ -18,6 +16,8 @@ public class XRDoorInteractable : SimpleHinchInteractable
     [SerializeField]
     private Vector3 endRotation;
 
+    public UnityEvent OnOpen;
+
     private Vector3 startRotation;
     private float startAngleX;
     private float endAngleX;
@@ -28,11 +28,7 @@ public class XRDoorInteractable : SimpleHinchInteractable
     {
         base.Start();
         startRotation = transform.localEulerAngles;
-        startAngleX = startRotation.x;
-        if (startAngleX >= 180)
-            startAngleX -= 360;
-
-        endRotation = openCollider.bounds.center;
+        startAngleX = GetAngle(startRotation.x);
 
         if (combinationLock != null)
         {
@@ -62,12 +58,7 @@ public class XRDoorInteractable : SimpleHinchInteractable
     {
         isClosed = false;
         isOpen = false;
-        float localAngleX = transform.localEulerAngles.x;
-
-        if (localAngleX >= 180)
-        {
-            localAngleX -= 360;
-        }
+        float localAngleX = GetAngle(transform.localEulerAngles.x);        
 
         if (localAngleX >= startAngleX + rotationLimits.x || 
             localAngleX <= startAngleX - rotationLimits.x)
@@ -85,6 +76,7 @@ public class XRDoorInteractable : SimpleHinchInteractable
         else if (isOpen)
         {
             transform.localEulerAngles = endRotation;
+            OnOpen?.Invoke();
         }
         else
         {
@@ -108,5 +100,15 @@ public class XRDoorInteractable : SimpleHinchInteractable
             isOpen = true;
             ReleaseHinch();
         }
+    }
+
+    private float GetAngle(float angle)
+    {
+        if (angle >= 180)
+        {
+            angle -= 360;
+        }
+
+        return angle;
     }
 }

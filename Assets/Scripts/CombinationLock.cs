@@ -6,10 +6,10 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class CombinationLock : MonoBehaviour
 {
-    private const string startInfoText = "Enter 3 Digits to Unlock";
-    private const string resetInfoText = "Enter 3 Digits to Lock";
-    private const string unlockPanelText = "Unlocked";
-    private const string lockPanelText = "Locked";
+    private const string START_INFO_TEXT = "Enter 3 Digits to Unlock";
+    private const string RESET_INFO_TEXT = "Enter 3 Digits to Lock";
+    private const string UNLOCK_PANEL_TEXT = "Unlocked";
+    private const string LOCK_PANEL_TEXT = "Locked";
 
     [SerializeField]
     private XRButtonInteractable[] comboButtons;
@@ -120,7 +120,7 @@ public class CombinationLock : MonoBehaviour
         isLocked = false;
         OnUnlocked();
         lockedPanel.color = unlockColor;
-        unlockText.text = unlockPanelText;
+        unlockText.text = UNLOCK_PANEL_TEXT;
         for (int i = 0; i < inputValues.Length; i++)
         {
             inputValues[i] = 0;
@@ -144,16 +144,16 @@ public class CombinationLock : MonoBehaviour
 
     private void ResetCombination()
     {
-        infoText.text = resetInfoText;
+        infoText.text = RESET_INFO_TEXT;
         buttonPresses = 0;
         resetCombo = true;
     }
 
     private void ResetLock()
     {
-        infoText.text = startInfoText;
+        infoText.text = START_INFO_TEXT;
         inputText.text = "";
-        unlockText.text = lockPanelText;
+        unlockText.text = LOCK_PANEL_TEXT;
         lockedPanel.color = lockColor;
         buttonPresses = 0;
         for(int i = 0; i < inputValues.Length; i++)
