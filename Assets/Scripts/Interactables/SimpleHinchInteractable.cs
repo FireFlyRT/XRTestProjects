@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
 public abstract class SimpleHinchInteractable : XRSimpleInteractable
 {
+    public UnityEvent<SimpleHinchInteractable> OnHingeSelected;
+
     [SerializeField]
     private bool isLocked;
     [SerializeField] 
@@ -15,6 +18,10 @@ public abstract class SimpleHinchInteractable : XRSimpleInteractable
     private InteractionLayerMask _grabLayer;
     [SerializeField]
     private Vector3 positionLimits;
+
+    [SerializeField]
+    private AudioClip hingeMoveClip;
+    public AudioClip GetHingeMoveClip => hingeMoveClip;
 
     private Transform grabHand;
     private Collider hingeCollider;
@@ -49,6 +56,7 @@ public abstract class SimpleHinchInteractable : XRSimpleInteractable
         {
             base.OnSelectEntered(args);
             grabHand = args.interactorObject.transform;
+            OnHingeSelected?.Invoke(this);
         }
     }
 

@@ -6,17 +6,34 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class DrawerInteractable : XRGrabInteractable
 {
-    [SerializeField] private Transform _drawerTransform;
+    [SerializeField] 
+    private Transform _drawerTransform;
 
-    [SerializeField] private XRSocketInteractor _keySocket;
-    [SerializeField] private GameObject _keyIndecLight;
-    [SerializeField] private bool _isLocked;
+    [SerializeField] 
+    private XRSocketInteractor _keySocket;
+    public XRSocketInteractor GetKeySocket => _keySocket;
 
-    [SerializeField] private InteractionLayerMask _defaultLayer;
-    [SerializeField] private InteractionLayerMask _grabLayer;
+    [SerializeField] 
+    private GameObject _keyIndecLight;
+    [SerializeField] 
+    private bool _isLocked;
 
-    [SerializeField] private Vector3 _limitDistances = new(.02f, .02f, 0);
-    [SerializeField] private float _maxLimitPositionZ = 0.85f;
+    [SerializeField] 
+    private InteractionLayerMask _defaultLayer;
+    [SerializeField] 
+    private InteractionLayerMask _grabLayer;
+
+    [SerializeField] 
+    private Vector3 _limitDistances = new(.02f, .02f, 0);
+    [SerializeField] 
+    private float _maxLimitPositionZ = 0.85f;
+
+    [SerializeField]
+    private AudioClip drawerMoveClip;
+    public AudioClip GetDrawerMoveClip => drawerMoveClip;
+    [SerializeField]
+    private AudioClip socketedClip;
+    public AudioClip GetSocketedClip => socketedClip;
 
     private Transform _parentTransform;
     private Vector3 _limitPositions;

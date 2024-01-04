@@ -134,10 +134,20 @@ public class WallInteraction : MonoBehaviour
     private int maxPower;
 
     [Header("Events")]
+    public UnityEvent OnDestroy;
+
+    [Header("Audio")]
     [SerializeField]
-    private UnityEvent OnDestroy; 
+    private AudioClip wallClip;
+    public AudioClip GetDestroyClip => wallClip;
+
+    [SerializeField]
+    private AudioClip socketClip;
+    public AudioClip GetSocketClip => socketClip;
 
     private XRSocketInteractor wallSocket;
+    public XRSocketInteractor GetWallSocket => wallSocket;
+
     private GameObject[] wallObjects;
     private Vector3 cubeSize;
     private Vector3 spawnPosition;

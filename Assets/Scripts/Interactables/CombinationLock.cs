@@ -34,6 +34,17 @@ public class CombinationLock : MonoBehaviour
     [SerializeField]
     private int[] inputValues;
 
+    [Header("Audio")]
+    [SerializeField]
+    private AudioClip lockClip;
+    public AudioClip GetLockClip => lockClip;
+    [SerializeField]
+    private AudioClip unlockClip;
+    public AudioClip GetUnlockClip => unlockClip;
+    [SerializeField]
+    private AudioClip comboButtonPressedClip;
+    public AudioClip GetComboButtonPressedClip => comboButtonPressedClip;
+
     private int maxButtonPresses;
     private int buttonPresses;
     private bool resetCombo;
@@ -42,6 +53,8 @@ public class CombinationLock : MonoBehaviour
     private void OnUnlocked() => UnlockAction?.Invoke();
     public UnityAction LockAction;
     private void OnLocked() => LockAction?.Invoke();
+    public UnityAction ComboButtonPressed;
+    private void OnComboButtonPressed() => ComboButtonPressed?.Invoke();
 
     // Start is called before the first frame update
     void Start()
@@ -81,17 +94,12 @@ public class CombinationLock : MonoBehaviour
             buttonPresses++;
 
             if (buttonPresses == maxButtonPresses)
-            {
                 if (CheckCombination())
-                {
                     Unlock();
-                }
                 else
-                {
                     ResetLock();
-                }
-                
-            }
+            else
+                OnComboButtonPressed();
         }
     }
 
@@ -151,6 +159,9 @@ public class CombinationLock : MonoBehaviour
 
     private void ResetLock()
     {
+        if (isLocked)
+            OnLocked();
+
         infoText.text = START_INFO_TEXT;
         inputText.text = "";
         unlockText.text = LOCK_PANEL_TEXT;
