@@ -8,31 +8,27 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class SimpleUIController : MonoBehaviour
 {
     [SerializeField]
-    private string[] messageStrings;
+    private ProgressControll progressControl;
     [SerializeField]
     private TMP_Text[] messageTexts;
 
-    [SerializeField]
-    private XRButtonInteractable startButton;
-    [SerializeField]
-    private GameObject keyIndecatorLight;
-
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        if (startButton != null)
+        if (progressControl != null)
         {
-            startButton.selectEntered.AddListener(StartButtonPressed);
+            progressControl.OnStartGame.AddListener(StartGame);
+            progressControl.OnChallengeComplete.AddListener(ChallangeComplete);
         }
     }
 
-    private void StartButtonPressed(SelectEnterEventArgs arg0)
+    private void ChallangeComplete(string arg0)
     {
-        SetText(messageStrings[1]);
-        if (keyIndecatorLight != null)
-        {
-            keyIndecatorLight.SetActive(true);
-        }
+        SetText(arg0);
+    }
+
+    private void StartGame(string arg0)
+    {
+        SetText(arg0);
     }
 
     public void SetText(string msg)
