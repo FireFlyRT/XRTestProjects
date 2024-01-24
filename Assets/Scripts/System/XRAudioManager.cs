@@ -216,7 +216,7 @@ public class XRAudioManager : MonoBehaviour
 
     private void OnSelectEnterGrabbable(SelectEnterEventArgs arg0)
     {
-        if (arg0.interactableObject.transform.CompareTag("key"))
+        if (arg0.interactableObject.transform.CompareTag("Key"))
             PlayGrabSound(keyClip);
         else
             PlayGrabSound(grabClip);
